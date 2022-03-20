@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -17,6 +18,8 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
+dotenv.config();
+const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
@@ -39,6 +42,17 @@ module.exports = {
    */
 
   networks: {
+    matic: {
+      provider: () =>
+        new HDWalletProvider(
+          process.env.KEY,
+          `https://rpc-mumbai.maticvigil.com`
+        ),
+      network_id: 80001,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+    },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache-cli, geth or parity) in a separate terminal
